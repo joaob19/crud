@@ -18,6 +18,11 @@ export class RegistrationComponent implements OnInit{
   public customPatterns = { '0': { pattern: new RegExp('\[a-zA-Z\]')} };
 
   public loading = false;
+
+  private toggleLoader(): void{
+    this.loading = !this.loading;
+  }
+
   public form = new FormGroup({
     id: new FormControl<string>(Math.random().toString(), [Validators.required]),
     name: new FormControl<string>('', [
@@ -63,13 +68,15 @@ export class RegistrationComponent implements OnInit{
 
   public save(): void {
     if (this.form.valid) {
+      this.toggleLoader();
       setTimeout(() => {
         const user = this.form.getRawValue() as User;
         this.service.saveUser(user);
         const message = this.userId ? 'Usuário salvo com sucesso!' : 'Usuário registrado com sucesso!';
         this.snackbar.open(message, 'OK', {duration: 600});
+        this.toggleLoader();
         this.router.navigate([''], {replaceUrl: true}).then();
-      }, 300);
+      }, 400);
     }
   }
 
