@@ -1,0 +1,11 @@
+<div class="container">
+  <app-user-list *ngIf="users.length > 0; else emptyMessage" [users]="users" (onEdit)="getUsers()" (onRemove)="getUsers()"></app-user-list>
+
+  <ng-template #emptyMessage>
+    <span class="empty-message">Não há nenhum usuário cadastrado</span>
+  </ng-template>
+
+  <button class="add-button" mat-fab (click)="addUser()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
